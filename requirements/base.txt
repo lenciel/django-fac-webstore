@@ -1,0 +1,56 @@
+Django==1.5.5
+South==0.8.4
+fabric
+
+#use it to recognize the timezone with name like "Asia/Chongqing"
+pytz==2013b
+
+# execel reader and writer
+xlwt==0.7.5
+xlrd
+
+# NOTE:# -*- coding: utf-8 -*-
+"""
+unicodetest.py
+
+test if dev enviroment is ok
+"""
+if __name__ == '__main__':
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+    ss ="全部"
+    uu = u'全部
+    CODEC = 'utf-8'
+    FILE = 'unicodetest.html'
+
+    f = open('archive.html', "r")
+    bytes_out = f.read().decode(CODEC)
+    bytes_in = bytes_out.encode(CODEC)
+    f = open(FILE, "w")
+    f.write(bytes_in)
+    f.close()
+
+    print repr(ss)
+    print repr(uu)
+
+    print("-------------------------------")
+    print ss.decode(CODEC )
+    print uu.encode(CODEC )
+
+    print("-------------------------------")
+    print repr(ss.decode(CODEC).encode('gbk'))
+    print uu
+# 1. MUST install native libjpeg before install to support JPEG
+#    cmd = "sudo yum install  libjpeg-devel.x86_64"
+# 2. MUST install FreeType support
+#    should install X11 from xquartz. see http://xquartz.macosforge.org/landing/
+#    osx_cmd = "brew install freetype"
+#    linux_cmd = "yum install freetype-devel.x86_64 "
+
+Pillow==2.3.0
+
+# Adding captcha images to any Django form.
+# To use django-simple-captcha we need to run "python manage.py migrate" at the first time.
+django-simple-captcha==0.4.1
+
