@@ -1,0 +1,141 @@
+a{
+    text-decoration: none;
+    color: white;
+}
+a img {
+    border: none;
+}
+a:hover{
+    color: white;
+}
+
+.product-detail .border-gray {
+    border: 1px solid #e6e6e6;
+}
+
+.product-detail .border-buttom-gray {
+    border-bottom: 1px dashed #e6e6e6;
+}
+
+.product-detail .fg-light-gray {
+    color: #999999;
+}
+
+.product-detail .fg-dark-gray {
+    color: #666666;
+}
+
+.product-detail .padding20 {
+    padding: 20px;
+}
+
+.product-detail .margin-left-20 {
+    margin-left: 20px;
+}
+
+.product-detail #carousel li {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.product-detail #carousel li:first-child {
+    margin-left: 0;
+}
+
+#carousel li[class="flex-active-slide"] img {
+    border: 2px solid #c10003;
+}
+
+#carousel li img {
+    height: 55px;
+}
+
+.product-detail .title {
+    font-size: 31px;
+    letter-spacing: 0;
+}
+
+.product-detail span, .product-detail p {
+    font-size: 14px;
+}
+
+.product-detail .summary-body {
+    height: 362px;
+}
+
+.product-detail .summary-foot {
+    padding-top: 20px;
+}
+
+.product-detail .space-vertical-15 {
+    height: 15px;
+}
+
+.product-detail .price {
+    color: #c10003;
+    font-size: 23px;
+}
+
+.product-detail .contact-body {
+    margin: 30px 0 0;
+    padding: 15px 8px;
+}
+
+.product-detail .contact-title {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.product-detail .detail-body {
+    margin: 30px 0 0;
+}
+
+.product-detail .label-category {
+    display: table;
+    border-left: 8px solid #aec4df;
+    background-color: #f3f6fa;
+    height: 55px;
+    padding: 0 0 0 15px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.product-detail .label-category .center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.product-detail .product-description {
+    margin: 0 10px;
+}
+
+.product-detail .article-title {
+    color: #15459b;
+    font-size: 20px;
+}
+
+.product-detail .article-title:hover {
+    cursor: pointer;
+}
+
+.product-detail .article-title-img {
+    width: 292px;
+    height: 180px;
+}
+
+.product-detail .slider-top img {
+    width: 356px !important;
+    height: 356px !important;
+}
+
+.product-detail .slider-bottom {
+    margin-top: 15px;
+}
+
+.product-detail #slider .flex-direction-nav a:before {
+    font-size: 30px;
+}
+
+.product-detail #carousel-left, .product-detail #carousel-right {
+    cursor: pointer;
+}

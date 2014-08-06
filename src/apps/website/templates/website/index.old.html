@@ -1,0 +1,210 @@
+{% extends 'website/website.base.inc.html' %}
+{% load static %}
+{% block title %} 中国电信应用工厂 {% endblock title %}
+{% block main_content %}
+  <!-- widget grid -->
+<section id="widget-grid" class="">
+
+<!-- row -->
+<div class="row">
+  <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+    <!-- widget div-->
+    <div class="jarviswidget jarviswidget-color-orangeLight" id="id-message-section"
+         data-widget-colorbutton="false" data-widget-editbutton="false"
+         data-widget-togglebutton="false" data-widget-deletebutton="false"
+         data-widget-fullscreenbutton="false" data-widget-custombutton="false"
+         data-widget-sortable="false" role="widget" style="">
+      <header role="heading">
+        <h2> 24899030@qq.com </h2>
+        <span>&nbsp;&nbsp;,您好!</span>
+      </header>
+
+      <!-- widget content -->
+      <div role="content" class="border-color-orangeLight">
+        <div class="widget-body">
+          <span style="line-height: 13px;font-size: 13px; margin: 8px;">
+            <i class="icon_mail_verify"></i>邮箱已验证
+          </span>
+          <div class="well">
+            <p> 订单提醒:
+              <span>&nbsp;&nbsp<a href="#">正在进行中的订单 (1)</a></span>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">待支付的订单 (1)</a></span>
+              <span>&nbsp;&nbsp;&nbsp;&nbsp;<a class="txt-red-highlight" href="#">待确认收货的订单 (1)</a></span>
+            </p>
+            <p> 站内消息:
+              <span>&nbsp;&nbsp;有</span>
+              <span class="txt-red-highlight">&nbsp;3&nbsp;</span>
+              <span>笔交易尚未完成</span>
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <!-- end widget content -->
+    </div>
+    <!-- end widget div -->
+  </article>
+
+
+  <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+    <!-- widget div-->
+    <div class="jarviswidget jarviswidget-no-border" id="id-orders-section"
+         data-widget-colorbutton="false" data-widget-editbutton="false"
+         data-widget-togglebutton="false" data-widget-deletebutton="false"
+         data-widget-fullscreenbutton="false" data-widget-custombutton="false"
+         data-widget-sortable="false" role="widget" style="">
+      <header role="heading">
+        <h2>未完成的交易</h2>
+
+        <div class="widget-toolbar no-border" role="menu">
+          <a href="javascript:void(0);" class="btn btn-lg btn-primary">合并支付</a>
+        </div>
+        <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+      </header>
+
+      <!-- widget content -->
+      <div role="content" class="no-border">
+        <div class="widget-body no-padding">
+          <table class="table borderless">
+            <thead>
+            <tr>
+              <th>订单信息</th>
+              <th>金额</th>
+              <th>时间</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+
+            <tr class="warning spacer">
+              <td>
+                <a href="{% url 'website:product:product_detail' product.id %}">
+                  <img class="product-title-image" src="{{ product.title_image_url }}" alt="order1"/>
+                </a>
+                订单编号：578109065 <br/>
+                Office 365小型企业高级版
+              </td>
+              <td>&#165;78.00</td>
+              <td>
+                2013-12-26
+                13:52:20
+              </td>
+              <td>未支付</td>
+              <td>
+                <a href="javascript:void(0);" class="btn btn-primary">去支付</a><br/>
+                <a href="javascript:void(0);"> 取消订单 </a>
+              </td>
+            </tr>
+              <div class="product border-gray" data-url="{% url 'website:product:product_detail' product.id %}">
+                <div class="image">
+                  <img src="{{ product.title_image_url }}"/>
+                  <div class="image-caption"><div class="text">{{ product.name }}</div></div>
+                </div>
+                <div class="summary">
+                  <p>{{ product.summary }}</p>
+                  <div class="price">&yen;&nbsp;{{ product..get_lowest_price }}</div>
+                </div>
+              </div>
+            {% endfor %}
+            <tr class="warning spacer">
+              <td>
+                <img class="product-title-image" src="img/demo/ac771ece.order1.png" alt="order1"/>
+                订单编号：578109065 <br/>
+                Office 365小型企业高级版
+              </td>
+              <td>&#165;78.00</td>
+              <td>
+                2013-12-26
+                13:52:20
+              </td>
+              <td>未支付</td>
+              <td>
+                <a href="javascript:void(0);" class="btn btn-primary">去支付</a><br/>
+                <a href="javascript:void(0);"> 取消订单 </a>
+              </td>
+            </tr>
+
+            <tr class="warning">
+              <td>
+                <img src="img/demo/fdb9b3f1.order2.png" alt="order1"/>
+                订单编号：578109065 <br/>
+                Office 365小型企业高级版
+              </td>
+              <td>&#165;2980.00</td>
+              <td>
+                2013-12-26
+                13:52:20
+              </td>
+              <td>未支付</td>
+              <td>
+                <a href="javascript:void(0);" class="btn btn-primary">去支付</a><br/>
+                <a href="javascript:void(0);"> 取消订单 </a>
+              </td>
+            </tr>
+
+            <tr class="warning">
+              <td>
+                <img src="img/demo/32875df4.order3.png" alt="order1"/>
+                订单编号：578109065 <br/>
+                Office 365小型企业高级版
+              </td>
+              <td>&#165;2980.00</td>
+              <td>
+                2013-12-26
+                13:52:20
+              </td>
+              <td>未支付</td>
+              <td>
+                <a href="javascript:void(0);" class="btn btn-success">确认收货</a><br/>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- end widget content -->
+    </div>
+    <!-- end widget div -->
+  </article>
+
+
+  <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+    <!-- widget div-->
+    <div class="jarviswidget jarviswidget-no-border" id="id-browser-history-section"
+         data-widget-colorbutton="false" data-widget-editbutton="false"
+         data-widget-togglebutton="false" data-widget-deletebutton="false"
+         data-widget-fullscreenbutton="false" data-widget-custombutton="false"
+         data-widget-sortable="false" role="widget" style="">
+      <header role="heading">
+        <h2>最近浏览过的商品</h2>
+      </header>
+
+      <hr/>
+      <!-- widget content -->
+      <div role="content" class="no-border">
+        <div class="widget-body">
+        </div>
+      </div>
+      <!-- end widget content -->
+    </div>
+    <!-- end widget div -->
+  </article>
+</div>
+<!-- end row -->
+</section>
+<!-- end widget grid -->
+
+<div class="top-product-frame">
+</div>
+{% endblock main_content %}
+{% block extrajs %}
+  <script>
+    $(document).ready(function() {
+      $(".product-title-image").click(function () {
+        window.location.href = $(this).data('url');
+      });
+    });
+  </script>
+{% endblock extrajs %}

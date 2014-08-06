@@ -1,0 +1,14 @@
+<script>
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        {% if hide_option_menu %}
+            WeixinJSBridge.call('hideOptionMenu');
+        {% else %}
+            WeixinJSBridge.call('showOptionMenu');
+        {% endif %}
+        {% if hide_toolbar_bar %}
+            WeixinJSBridge.call('hideToolbar');
+        {% else %}
+            WeixinJSBridge.call('showToolbar');
+        {% endif %}
+    });
+</script>

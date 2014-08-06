@@ -1,0 +1,63 @@
+{% load staticfiles %}
+<!doctype html>
+  <head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Use the correct meta names below for your web application
+       Ref: http://davidbcalhoun.com/2010/viewport-metatag
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- Basic Styles -->
+    <link rel="stylesheet" href="{% static 'website/styles/bootstrap.css' %}" media="screen"/>
+    <link rel="stylesheet" href="{% static 'website/styles/font-awesome.css' %}" media="screen"/>
+
+    <!-- GOOGLE FONT -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <!-- PAGE RELATED CSS -->
+    {% block extracss %}{% endblock %}
+
+    <!-- Link to Microsoft CDN's jQuery + jQueryUI; fall back to local -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.2.min.js"></script>
+    <script>
+      if (!window.jQuery) {
+        document.write('<script src="{% static 'website/scripts/libs/jquery-2.0.2.min.js' %}"><\/script>');
+      }
+    </script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="{% static 'website/scripts/libs/bootstrap.min.js' %}"></script>
+
+    <style>
+        .container img{max-width: 100%}
+    </style>
+  </head>
+  <body>
+    <!-- MAIN PANEL -->
+    <div class="container">
+      <div class="row">
+        <!-- MAIN CONTENT -->
+        <div id="content">
+          {% block main_content %}{% endblock %}
+        </div>
+        <!-- END MAIN CONTENT -->
+      </div>
+
+
+    </div>
+    <!-- END MAIN PANEL -->
+
+    <!-- PAGE RELATED PLUGIN(S) -->
+    {% block extrajs %}{% endblock %}
+
+    <!-- GOOGLE ANALYTICS CODE Below -->
+    {% include "website/ga.html" %}
+  </body>
+
+</html>

@@ -1,0 +1,105 @@
+[
+  {
+    "pk": 1,
+    "model": "order.invoice",
+    "fields": {
+      "receiver": "receiver2",
+      "address": "address1",
+      "address_province": "四川省",
+      "address_city": "成都市",
+      "address_district": "锦江区",
+      "mobile": "87654321",
+      "email": "test2@webstore.com",
+      "content": "这是我发票"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "order.invoice",
+    "fields": {
+      "receiver": "receiver3",
+      "address": "address1",
+      "address_province": "四川省",
+      "address_city": "成都市",
+      "address_district": "锦江区1",
+      "mobile": "876543210",
+      "email": "test2@webstore.com",
+      "content": "这是我发票1"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "order.order",
+    "fields": {
+      "amount": 640,
+      "ship_address": "四川省成都市金牛区万达广场124号",
+      "payment": "支付宝",
+      "invoice": 1,
+      "created": "2013-12-30T19:19:30.931",
+      "updated": "2013-12-30T19:19:30.931",
+      "owner": 100000001,
+      "notes": "notes1",
+      "status": 0
+    }
+  },
+  {
+    "pk": 2,
+    "model": "order.order",
+    "fields": {
+      "amount": 640,
+      "ship_address": "天府软件园G区",
+      "payment": "支付宝",
+      "invoice": 2,
+      "created": "2013-12-30T20:19:30.931",
+      "updated": "2013-12-30T20:19:30.931",
+      "owner": 100000001,
+      "notes": "notes1",
+      "status": 1
+    }
+  },
+  {
+    "pk": 1,
+    "model": "order.ordersku",
+    "fields": {
+      "order": 1,
+      "sku": 1,
+      "quantity": 1,
+      "price": 240,
+      "amount": 240
+    }
+  },
+  {
+    "pk": 2,
+    "model": "order.ordersku",
+    "fields": {
+      "order": 1,
+      "sku": 2,
+      "quantity": 2,
+      "price": 200,
+      "amount": 400
+    }
+  },
+  {
+    "pk": 3,
+    "model": "order.ordersku",
+    "fields": {
+      "order": 2,
+      "sku": 1,
+      "quantity": 1,
+      "price": 240,
+      "amount": 240
+    }
+  },
+  {
+    "pk": 4,
+    "model": "order.ordersku",
+    "fields": {
+      "order": 2,
+      "sku": 2,
+      "quantity": 2,
+      "price": 200,
+      "amount": 400
+    }
+  }
+]
+

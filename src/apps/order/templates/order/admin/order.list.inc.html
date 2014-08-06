@@ -1,0 +1,38 @@
+{% extends 'common/admin/generic.list.inc.html' %}
+
+{% block pagecontent_js %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function () {
+      var $main_table = $('#id-{{ model_name }}-table');
+
+      $main_table.on('click', 'a[data-action=order_express_company]', function (e) {
+        e.stopPropagation();
+        var $btn = $(this);
+        var action_response = function (response) {
+          if (response['ret'] == 0) {
+              refreshPage();
+          } else {
+              bootbox.alert("错误:" + response['errmsg-detail']);
+          }
+        };
+        bootbox.prompt(
+                "录入快递公司和快递号",
+                "取消",
+                "确定",
+                function (result) {
+                    if (result != null) {
+                        var post_data = {'express': result};
+                        $.extend(post_data, {csrfmiddlewaretoken: '{{ csrf_token }}'});
+                        $.post($btn.data('url'), post_data, action_response)
+                    }
+                },
+                $btn.data('extra')['express']
+        );
+      });
+    });
+
+  </script>
+
+{% endblock pagecontent_js %}
+

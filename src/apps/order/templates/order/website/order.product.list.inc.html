@@ -1,0 +1,20 @@
+<Table class="table table-hover table-bordered">
+  {% for sku in sku_list %}
+  <tr>
+    <td><img src="{{ sku.sku.product.title_image_url }}"> </td>
+    <td>{{ sku.sku.product.name }} <input type="hidden" name="sku_id" value="{{ sku.sku.id }}"></td>
+    <td>{{ sku.sku.display_text }}</td>
+    <td>{{ sku.sku.price }}<input type="hidden" name="price_{{ sku.sku.id }}" value="{{ sku.sku.price }}"></td>
+    <td>{{ sku.quantity }}<input type="hidden" name="quantity_{{ sku.sku.id }}" value="{{ sku.quantity }}"></td>
+  </tr>
+  <tr>
+    <td colspan="2">附言: <input type="text" name="notes_{{ sku.sku.id }}"/></td>
+    <td colspan="3">商品总价: {{ sku.amount }}</td>
+  </tr>
+  {% endfor %}
+</Table>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+  });
+</script>

@@ -1,0 +1,64 @@
+{% load staticfiles %}
+{# TODO move this page #}
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'website/css/website.css' %}">
+  </head>
+  <body>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th><a href="">全部订单</a></th>
+            <th><a href="">正在进行中的订单 ({{ my_orders.uncompleted_count }})</a></th>
+            <th><a href="">待支付的订单 ({{ my_orders.not_paid_count }})</a></th>
+            <th><a href="">待确认收货的订单 ({{ my_orders.not_confirmed_count }})</a></th>
+          </tr>
+        </thead>
+      </table>
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>订单信息</th>
+            <th></th>
+            <th>金额</th>
+            <th>时间</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in my_orders.all %}
+          <tr>
+            <td><a href="{% url 'website:order:order_detail' order.id %}"><img src="{{ order.title_img_url }}" /></a></td>
+            <td>
+              订单编号 <a href="{% url 'website:order:order_detail' order.id %}">{{ order.seq }} </a> <br />
+              {% for id, name in order.products.iteritems %}
+                <a href="{% url 'website:product:product_detail' id %}">{{ name }}</a><br />
+              {% endfor %}
+            </td>
+            <td>{{ order.amount }}</td>
+            <td>{{ order.updated|date:'Y-m-d H:i:s' }}</td>
+            <td>
+              {{ order.status_text }} <br />
+              {% if order.action %}
+                {% if order.action.next and order.action.active %}
+                  <a href="{% url 'website:order:order_change_status' order.seq order.action.next %}">{{ order.action.label }}</a>
+                {% else %}
+                  {{ order.action.label }}
+                {% endif %}
+              {% endif %}
+            </td>
+            <td>
+              {% if order.cancel %}
+                <a href="{% url 'website:order:order_change_status' order.seq order.cancel.next %}">{{ order.cancel.label }}</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+  </body>
+</html>

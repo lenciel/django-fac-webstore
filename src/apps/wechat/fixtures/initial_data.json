@@ -1,0 +1,10 @@
+[
+  {
+    "pk": 1,
+    "model": "wechat.wechatprofile",
+    "fields": {
+      "access_token": "hi",
+      "expires_at": -1
+    }
+  }
+]

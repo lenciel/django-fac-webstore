@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>帐号绑定</title>
+  {% include "wechat/wechat_extentjs.html" %}
+</head>
+  <body>
+    <h1>帐号绑定</h1>
+
+    {% if form.errors %}
+      <p style="color: red;">
+        请纠正下面错误{{ form.errors }}.
+      </p>
+    {% endif %}
+
+    <form action="{% url "wechat:bind" %}" method="post">
+      <table>
+        {{ form.as_table }}
+      </table>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

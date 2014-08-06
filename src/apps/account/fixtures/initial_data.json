@@ -1,0 +1,21 @@
+[
+  {
+    "pk": 1,
+    "model": "account.user",
+    "password": "webSt0re@123",
+    "fields": {
+      "email": "admin",
+      "name": "管理员",
+      "phone": "",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-12-24T13:08:16.579",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$eLtn3r0MVSyB$81i2fnxqBcFg9bFz7w+DLB+zi0BYY2AVMGOphEkm+RA=",
+      "date_joined": "2013-12-24T13:07:46.697"
+    }
+  }
+]

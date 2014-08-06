@@ -1,0 +1,32 @@
+{#a simple template works with ModelAwareMixin#}
+
+{% extends 'admin/simple.base.inc.html' %}
+
+{% block pagenav %}
+
+{% if page_title %}
+  {{ page_title }}
+{% else %}
+  {% if object %}编辑{% else %}添加{% endif %}{{ model_verbose_name }}
+{% endif %}
+
+{% endblock pagenav %}
+
+{% block pagecontent %}
+
+{% include 'admin/form.inc.html' with submit_btn_name='保存' form_id=form_id enable_default_validate=False %}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    var $form = $('#{{ form_id }}');
+    var rules = $form.buildFormValidationRules(true);
+    $form.validate({rules: rules});
+    $(':input[class*=limited]').each(input_limit_func);
+    $('select', $form).enableChosen();
+
+    $form.ajaxForm($form.buildAjaxFormOptions());
+  });
+</script>
+
+{% endblock pagecontent %}

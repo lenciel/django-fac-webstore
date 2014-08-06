@@ -1,0 +1,54 @@
+[
+  {
+    "pk": 100000000,
+    "model": "account.user",
+    "password": "123456",
+    "fields": {
+      "email": "staff@webstore.com",
+      "name": "staff",
+      "phone": "",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": true,
+      "last_login": "2013-12-27T10:15:29.729",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$JcIDIVlij6lL$96WrdBIgwjQYbXs7hOPEwUGwhrR+6g2Ur5oaBMHlX4I=",
+      "date_joined": "2013-12-27T10:09:15.020"
+    }
+  },
+  {
+    "pk": 100000001,
+    "model": "account.user",
+    "password": "123456",
+    "fields": {
+      "email": "customer@webstore.com",
+      "name": "customer",
+      "phone": "",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-27T10:15:29.729",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$JcIDIVlij6lL$96WrdBIgwjQYbXs7hOPEwUGwhrR+6g2Ur5oaBMHlX4I=",
+      "date_joined": "2013-12-27T10:09:15.020"
+    }
+  },
+  {
+    "pk": 100000001,
+    "model": "customer.customer",
+    "fields": {
+      "company_website": "",
+      "company_tel": "",
+      "company_name": "",
+      "groups": [],
+      "company_address": "",
+      "user_permissions": [],
+      "company_industry": "",
+      "is_company": false
+    }
+  }
+]

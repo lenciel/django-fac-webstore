@@ -1,0 +1,115 @@
+{% extends 'website/website.base.inc.html' %}
+{% load staticfiles %}
+{% block title %} 中国电信应用工厂 {% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'cms/styles/app.css' %}" media="screen"/>
+{% endblock %}
+
+{% block header-nav %}
+<div style="padding-top: 50px;">
+  <span style="color:#999999;">您好, 欢迎来到中国电信应用工厂!</span>
+</div>
+{% endblock header-nav %}
+
+{% block main_content %}
+
+<!-- outer -->
+<div class="col-md-12">
+
+<!-- giving a namespace -->
+<div class="article-detail">
+
+<!-- content -->
+<div class="row">
+<div class="col-md-12">
+
+  <!-- nav -->
+  <div class="row">
+    <div class="col-md-12" style="">
+      <div class="as-table">
+        <div class="space-horizontal-20"></div>
+        <div class="icon_back_home as-table-center" style="margin-left: 20px"></div>
+        <div class="space-horizontal-10"></div>
+        <a href="{% url 'website:index' %}" class="article-nav as-table-center fg-blue" style="margin-left: 10px">回到首页</a>
+      </div>
+    </div>
+  </div>
+  <div class="space-vertical-30"></div>
+  <!-- article main -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <!-- sidebar -->
+        <div class="col-md-3">
+          {% for product in article.products.all %}
+          <div class="border-gray padding10 product">
+            {% if is_preview %}
+              <a href="{% url 'website:product:product_preview' product.id %}"></a>
+            {% else %}
+              <a href="{% url 'website:product:product_detail' product.id %}"></a>
+            {% endif %}
+            <div class="image">
+              <img src="{{ product.title_image_url }}"/>
+              <div class="image-caption">{{ product.name }}</div>
+            </div>
+            <div class="summary">
+              <p>{{ product.summary_short }}</p>
+            </div>
+            <div class="price">{{ product.price_text }}</div>
+          </div>
+          <div class="space-vertical-10"></div>
+          {% endfor %}
+        </div>
+
+        <!-- detail -->
+        <div class="col-md-9">
+          <div class="padding-left-20 border-buttom-gray-bold">
+            <h1 style="letter-spacing: 1px; font-weight: bold; font-size: 20px;">{{ article.title }}</h1>
+            <div class="space-vertical-10"></div>
+          </div>
+          <div class="padding-left-20">
+            <div class="space-vertical-10"></div>
+            <p class="fg-light-gray" style="font-size: 12px;">{{ article.created|date:'Y年m月d日H:i' }} 来源：{{ article.source }} </p>
+            <div class="space-vertical-30"></div>
+            <div class="p-reset">
+            {% autoescape off %}
+              {{ article.content_html }}
+            {% endautoescape %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+{% endblock main_content %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'website/scripts/plugin/flexslider/jquery-flexslider-min-2.1.js' %}"></script>
+
+  <script>
+    $(document).ready(function() {
+      $('#carousel').flexslider({
+        directionNav: true,
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 60,
+        asNavFor: '#slider'
+      });
+
+      $('#slider').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel"
+      });
+    });
+  </script>
+{% endblock extrajs %}

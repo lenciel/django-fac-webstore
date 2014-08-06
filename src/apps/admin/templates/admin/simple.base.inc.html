@@ -1,0 +1,22 @@
+{#a simple template works with ModelAwareMixin#}
+
+{% extends 'admin/task.base.inc.html' %}
+
+{% block topnav %}
+<ul class="breadcrumb">
+    <li>
+        <i class="icon-home"></i> <a href="#">主页</a>
+    </li>
+    <li class="active">
+        <i class="icon-group"></i> <a href="#" data-url="{{ list_url }}">{{ model_verbose_name }}</a>
+    </li>
+    {% if object %}
+    <li class="active">{{ object }}</li>
+    {% endif %}
+</ul>
+<div class="pull-right">
+    {% if not hide_back_btn %}
+    <a class="btn btn-link btn-large" href="#" data-url="{{ list_url }}">返回</a>
+    {% endif %}
+</div>
+{% endblock topnav %}

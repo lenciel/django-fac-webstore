@@ -1,0 +1,227 @@
+{% extends 'website/website.base.inc.html' %}
+{% load staticfiles %}
+{% block title %} 中国电信应用工厂 - {{ product.name }} {% endblock title %}
+
+{% block extracss %}
+<link rel="stylesheet" href="{% static 'product/styles/app.css' %}" media="screen"/>
+<link rel="stylesheet" href="{% static 'website/styles/flexslider.css' %}" media="screen"/>
+{% endblock %}
+
+{% block header-nav %}
+<div style="padding-top: 50px;">
+  <span style="color:#999999;">您好, 欢迎来到中国电信应用工厂!</span>
+</div>
+{% endblock header-nav %}
+
+{% block main_content %}
+
+<!-- outer -->
+<div class="col-md-12">
+
+<!-- giving a namespace -->
+<div class="product-detail">
+
+<!-- summary -->
+<div class="row">
+<div class="col-md-12">
+<!-- summary head -->
+<div class="padding20 border-gray">
+  <div class="row">
+    <!-- slider -->
+    <div class="col-md-5">
+      <div class="slider-top">
+        <div id="slider" class="flexslider" style="margin-bottom: 0;">
+          <ul class="slides">
+            {% for image in product.images.all %}
+              <li>
+                <img src="{{ image.image_url }}">
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      <div class="slider-bottom">
+        <div class="pull-left" style="margin: 1px 13px 0 0;"><a id="carousel-left" class="spec_forward"></a></div>
+        <div class="pull-left" style="width: 295px;">
+          <div id="carousel" class="flexslider">
+            <ul class="slides">
+              {% for image in product.images.all %}
+                <li>
+                  <img src="{{ image.image_url }}">
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="pull-left" style="margin: 1px 0 0 13px;"><a id="carousel-right" class="spec_backward"></a></div>
+      </div>
+    </div>
+    <!-- title -->
+    <div class="col-md-7">
+      <div class="summary-body border-buttom-gray">
+        <h1 class="title">{{ product.name }}</h1>
+        <span class="fg-light-gray">提供商：{{ product.provider.name }}</span><span class="margin-left-20">成交次数：{{ product.sale_volume }}</span>
+        <div class="space-vertical-15"></div>
+        <p class="fg-dark-gray">{{ product.summary }}</p>
+        <div class="space-vertical-15"></div>
+        <div class="space-vertical-15"></div>
+        <span class="price">{{ product.price_text }}</span>
+      </div>
+      <div class="summary-foot">
+        <a id="id-btn-purchase" href="{{ product.web_link }}" class="btn_orange_large" target="_blank">前往购买</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- summary body -->
+<div class="row">
+  <div class="col-md-3" style="padding-right: 0px; width: 218px;">
+    <div class="contact-body border-gray">
+      <p class="contact-title">如需帮助您可以<br/>联系客服</p>
+      <div class="icon_service_blue_medium pull-right"></div>
+      <div class="space-vertical-15"></div>
+      <p style="margin-bottom: 0">公司名字：</p>
+      <p class="fg-dark-gray">{{ product.provider.name }}</p>
+      <div class="space-vertical-15"></div>
+      {% if product.provider.online_service %}
+      <p>在线客服：</p>
+      <a href="{{ product.provider.online_service }}" target="_blank" class="btn_blue_large btn_advisory"><i class="icon_advisory"></i>咨 询</a>
+      <div class="space-vertical-15"></div>
+      {% endif %}
+      {% if product.provider.phone_service %}
+      <p style="margin-bottom: 0">电话：</p>
+      <p class="fg-dark-gray">{{ product.provider.phone_service }}</p>
+      {% endif %}
+      {% if product.provider.email %}
+      <p style="margin-bottom: 0">邮箱：</p>
+      <p class="fg-dark-gray">{{ product.provider.email }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-md-9" style="width: 792px;">
+    <div class="detail-body">
+      <div class="label-category"><div class="center">产品详情</div></div>
+      <div class="space-vertical-15"></div>
+      <div class="product-img-set">
+        {% for image in product.detail_images.all %}
+          <img src="{{ image.image_url }}">
+          <div class="space-vertical-15"></div>
+        {% endfor %}
+      </div>
+      <div class="product-description">
+        <p>{{ product.detail_text|linebreaks }}</p>
+      </div>
+      <div class="space-vertical-15"></div>
+      <div class="space-vertical-15"></div>
+      <div class="space-vertical-15"></div>
+      <div class="space-vertical-15"></div>
+      <div class="label-category"><div class="center">产品资讯</div></div>
+      <div class="space-vertical-15"></div>
+      {% if product.article and product.article.is_published and product.article.is_active or is_preview%}
+      <div class="row">
+        <div class="col-md-5">
+          <img class="article-title-img" src="{{ product.article.title_image_url }}">
+        </div>
+        <div class="col-md-7">
+          {% if is_preview %}
+            <a href="{% url 'website:cms:article_preview' product.article.id %}" class="article-title">{{ product.article.title }}</a>
+          {% else %}
+            <a href="{% url 'website:cms:article_detail' product.article.id %}" class="article-title">{{ product.article.title }}</a>
+          {% endif %}
+          <div class="space-vertical-15"></div>
+          <p class="fg-dark-gray">{{ product.article.summary }}</p>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+</div>
+</div>
+{% endblock main_content %}
+
+{% block extrajs %}
+<script type="text/javascript" src="{% static 'website/scripts/plugin/flexslider/jquery-flexslider-min-2.1.js' %}"></script>
+
+  <script>
+
+    $(document).ready(function() {
+      // slider
+      var bindPrev = function(slider) {
+        $('#carousel-left').click(function() {
+          slider.direction = 'prev';
+          if (slider.hasOwnProperty('currentSlide') && slider.currentSlide != 0)  {
+            slider.flexAnimate(slider.currentSlide - 1, true);
+          }
+        });
+      }
+
+      var bindNext = function(slider) {
+        $('#carousel-right').click(function() {
+          slider.direction = 'next';
+          if (slider.hasOwnProperty('currentSlide') && slider.currentSlide != slider.last)  {
+            slider.flexAnimate(slider.currentSlide + 1, true);
+          }
+        });
+      }
+
+      var updateNavBtn = function(slider) {
+        $('#carousel-left').attr('class', 'spec_forward' + (!slider.hasOwnProperty('currentSlide') ||
+                                                            slider.currentSlide == 0 ?
+                                                            '_disabled' : ''));
+
+        $('#carousel-right').attr('class', 'spec_backward' + (!slider.hasOwnProperty('currentSlide') ||
+                                                              slider.currentSlide == slider.last ||
+                                                              slider.count <= 5 ?
+                                                              '_disabled' : ''));
+      }
+
+      $('#carousel').flexslider({
+        minItems: 1,
+        maxItems: 5,
+        directionNav: false,
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 55,
+        itemMargin: 5,
+        asNavFor: '#slider',
+        start: function(slider) {
+          updateNavBtn(slider);
+          bindPrev(slider);
+          bindNext(slider);
+        },
+        after: function(slider) {
+          updateNavBtn(slider);
+        }
+      });
+
+      $('#slider').flexslider({
+        directionNav: false,
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel"
+      });
+
+      // FIXME flexslider 在只有一张图片的时候显示不正常
+      $('#carousel li:first-child').addClass('flex-active-slide').attr('style', 'width: 55px;');
+
+      // ga
+      $('#id-btn-purchase').on('click', function() {
+        // API: ga('send', 'event', 'category', 'action', 'label');
+        ga('send', 'event', '购买', 'click', '{{ product.id }}|{{ product.name }}|{{ product.provider.name }}');
+      });
+    });
+  </script>
+{% endblock extrajs %}

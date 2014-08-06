@@ -1,0 +1,87 @@
+{% load staticfiles %}
+
+<div class="form-horizontal" id="id_invoice_panel">
+  <label>
+    发票信息
+  </label>
+
+  <div class="control-group">
+    <label for="id_invoice-content" class="control-label">
+      发票内容
+    </label>
+
+    <div class="controls">
+      <input type="text" name="invoice-content" maxlength="128" id="id_invoice-content" class="required">
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="id_invoice-receiver" class="control-label">
+      收货人姓名
+    </label>
+    <div class="controls">
+      <input type="text" name="invoice-receiver" maxlength="128" id="id_invoice-receiver" class="required">
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="id_invoice-address_province" class="control-label">
+      所在地区
+    </label>
+    <div class="controls">
+      <select id="id_invoice-address_province" name="invoice-address_province"></select>
+      <select id="id_invoice-address_city" name="invoice-address_city"></select>
+      <select id="id_invoice-address_district" name="invoice-address_district"></select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="id_invoice-address" class="control-label">
+      详细地址
+    </label>
+
+    <div class="controls">
+      <input type="text" name="invoice-address" maxlength="128" id="id_invoice-address" class="required input-xxlarge">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="control-group">
+        <label for="id_invoice-mobile" class="control-label">
+          手机号码
+        </label>
+
+        <div class="controls">
+          <input type="text" name="invoice-mobile" maxlength="128" id="id_invoice-mobile" class="required number">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="control-group">
+        <label for="id_invoice-tel" class="control-label">
+          电话
+        </label>
+
+        <div class="controls">
+          <input type="text" name="tel" maxlength="128" id="id_invoice-tel">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="control-group">
+    <label for="id_invoice-email" class="control-label">
+      邮件地址
+    </label>
+
+    <div class="controls">
+      <input type="text" name="invoice-email" maxlength="128" id="id_invoice-email" class="email">
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var $panel = $("#id_invoice_panel");
+    var $province_selector = $('#id_invoice-address_province', $panel); // 省
+    var $city_selector = $('#id_invoice-address_city', $panel);         // 市
+    var $district_selector = $('#id_invoice-address_district', $panel); // 区/县
+    init_district_selector($province_selector, $city_selector, $district_selector, '', '', '');
+  });
+</script>

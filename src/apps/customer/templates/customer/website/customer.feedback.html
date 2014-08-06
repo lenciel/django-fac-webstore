@@ -1,0 +1,35 @@
+{% extends 'customer/website/customer.base.html' %}
+{% load staticfiles %}
+{% block customer_main_content %}
+  <form class="custom"
+        id="id-msg-form"
+        novalidate="novalidate"
+        method="post"
+        enctype="application/json"
+        action="{% url 'website:customer:customer_feedback' %}">
+    {% csrf_token %}
+    如果您对我们的商品或者服务有不满之处，请在此提交投诉，我们会尽快给予答复或处理，同时您也可以拨打我们的服务热线：400-879-3988
+    <fieldset>
+      <div class="row">
+        <div class="large-12 columns case-message-input">
+          <textarea name="remarks" id="id_remarks_textarea" maxlength="500" placeholder="请留下您的留言" autocomplete="off"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <input type="submit" class="btn pull-right" id="id_send_button" disabled="disabled" value="发送"/>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+{% endblock %}
+{% block extrajs %}
+  <script src="{% static 'admin/js/site.ajaxform.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      $('#id_remarks_textarea').each(input_limit_func).on('keyup', function() {
+        $('#id_send_button').attr('disabled', false);
+      })
+    });
+  </script>
+{% endblock extrajs %}

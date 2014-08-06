@@ -1,0 +1,14 @@
+{% load i18n %}{% autoescape off %}
+{{ site_name }} 向你发送的激活邮件
+
+请到以下地址激活：
+{% block reset_link %}
+{{ protocol }}://{{ domain }}{% url 'website:email_confirm' uidb36=uid token=token %}
+{% endblock %}
+用户名 {{ user.get_username }}
+
+感谢您的注册！
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+
+{% endautoescape %}

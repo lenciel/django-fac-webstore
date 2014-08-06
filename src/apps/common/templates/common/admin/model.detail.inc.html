@@ -1,0 +1,22 @@
+{% extends 'admin/simple.base.inc.html' %}
+
+{% block pagenav %}
+  {{ model_verbose_name }}详情
+{% endblock pagenav %}
+
+{% block pagecontent %}
+
+<div class="profile-user-info profile-user-info-striped">
+  {% for field in detail %}
+      <div class="profile-info-row" style="min-height: 30px">
+        <div class="profile-info-name">
+          {{ field.label }}
+        </div>
+        <div class="profile-info-value width-75">
+          {{ field.value | linebreaks }}
+        </div>
+      </div>
+  {% endfor %}
+</div>
+
+{% endblock pagecontent %}

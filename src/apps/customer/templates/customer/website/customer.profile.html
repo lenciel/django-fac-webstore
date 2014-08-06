@@ -1,0 +1,95 @@
+{% extends 'customer/website/customer.base.html' %}
+{% load staticfiles %}
+{% block customer_main_content %}
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="{% url 'website:customer:customer_profile' %}">基本信息</a></li>
+    <li><a href="{% url 'website:customer:customer_change_password' %}">账号安全</a></li>
+    <li><a href="#">增票资质</a></li>
+  </ul>
+  <form id="id-profile-form" action="{% url 'website:customer:customer_profile' %}"
+        method="post" class="form-horizontal profile-form">{% csrf_token %}
+    <div class="text-frame pull-left">
+      <div class="control-group">
+        <label class="control-label" for="id_account">登陆账号</label>
+        <div class="controls">
+          <input type="text" id="id_account" value="{{ user.email }}" disabled />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_nickname">昵称</label>
+        <div class="controls">
+          {{ form.name }}{{ form.name.errors }}
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_phone">手机号码</label>
+        <div class="controls">
+          {{ form.phone }}{{ form.phone.errors }}
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_email">绑定邮箱</label>
+        <div class="controls">
+          <input type="text" id="id_email"  value="{{ user.email }}" disabled />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_company">企业名称</label>
+        <div class="controls">
+          {{ form.company_name }}{{ form.company_name.errors }}
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">所在地</label>
+        <div class="controls">
+          <select id="id_company_address_province" name="company_address_province" class="province"></select>
+          <select id="id_company_address_city" name="company_address_city" class="city"></select>
+          <select id="id_company_address_district" name="company_address_district" class="district"></select>
+          <br/>
+          <input id="id_company_address_street" name="company_address_street" class="street" type="text"/>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="id_register_time">注册时间</label>
+        <div class="controls">
+          <input type="text" id="id_register_time" value="{{ customer.date_joined | date:'Y-m-d H:i' }}" disabled />
+        </div>
+      </div>
+    </div>
+    <div class="avatar-frame pull-right">
+      <img src="{% static 'img/5.jpg' %}" class="img-circle">
+    </div>
+    <div class="clear"></div>
+    <div class="line"></div>
+    {% if saved == 'true' %}
+      <div class="hint">
+        <span class="label label-success">保存成功！</span>
+      </div>
+    {% endif %}
+    <input type="submit" class="btn pull-right" value="保存" />
+  </form>
+{% endblock %}
+
+{% block extrajs %}
+  <script src="{% static 'website/js/district.js' %}"></script>
+  <script>
+
+    $(document).ready(function() {
+      $('.hint').fadeOut(2000);
+      $( '#id-profile-form').validate();
+
+      var $province_selector = $('.province'); // 省
+      var $city_selector = $('.city');         // 市
+      var $district_selector = $('.district'); // 区/县
+
+
+      var regexp = /^(.*?)_(.*?)_(.*?)_(.*)$/g;
+      var init_address_list = regexp.exec('{{ customer.company_address }}')
+      init_address_list = init_address_list == null ? [] : init_address_list;
+
+      init_district_selector($province_selector, $city_selector, $district_selector,
+        init_address_list[1], init_address_list[2], init_address_list[3]);
+      $('#id_company_address_street').val(init_address_list[4])
+    });
+  </script>
+{% endblock extrajs %}

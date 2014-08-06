@@ -1,0 +1,182 @@
+{% load staticfiles %}
+
+<div class="form-horizontal" id="id_address_panel">
+  {% for address in ship_addresses %}
+    <label class="radio">
+      <input type="radio" name="address_options" id="id_address_{{ address.id }}"
+             data-values='{{ address.value_json }}' value="{{ address.display_text }}">
+      {{ address.display_text }}
+      <a href="#"  class="btn btn-info edit_address" data-id="{{ address.id }}">编辑</a>
+      <a href="#"  class="btn btn-warning delete_address" data-id="{{ address.id }}" data-url="{% url 'website:order:shipaddress_delete' address.id %}">删除</a>
+    </label>
+  {% endfor %}
+  <label class="radio">
+    <input type="radio" name="address_options" id="id_address_new">
+    使用新地址
+  </label>
+  <form method="post" id="id_address_form" action="{% url 'website:order:shipaddress_update' %}">
+    <div class="control-group">
+      <label for="id_receiver" class="control-label">
+        收货人
+      </label>
+      <div class="controls">
+        <input type="text" name="receiver" maxlength="128" id="id_receiver" class="required">
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="id_address_province" class="control-label">
+        所在地区
+      </label>
+      <div class="controls">
+        <select id="id_address_province" name="address_province"></select>
+        <select id="id_address_city" name="address_city"></select>
+        <select id="id_address_district" name="address_district"></select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label for="id_address" class="control-label">
+        详细地址
+      </label>
+      <div class="controls">
+        <input type="text" name="address" maxlength="128" id="id_address" class="required input-xxlarge">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="control-group">
+          <label for="id_mobile" class="control-label">
+            手机号码
+          </label>
+          <div class="controls">
+            <input type="text" name="mobile" maxlength="128" id="id_mobile" class="required number">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="control-group">
+          <label for="id_tel" class="control-label">
+            电话
+          </label>
+          <div class="controls">
+            <input type="text" name="tel" maxlength="128" id="id_tel">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="control-group">
+          <label for="id_email" class="control-label">
+            邮件地址
+          </label>
+          <div class="controls">
+            <input type="text"  name="email" maxlength="128" id="id_email" class="email">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="id_is_default" class="control-label">
+        默认收货地址.
+      </label>
+      <div class="controls">
+        <input type="checkbox" id="id_is_default" name="is_default">
+      </div>
+    </div>
+
+    <input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
+    <input type="hidden" name="id" value="">
+    <div class="alert alert-block hide"></div>
+
+    <button class="btn btn-info" type="submit">
+        <i class="icon-ok bigger-110"></i>保存
+    </button>
+  </form>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var $panel = $("#id_address_panel");
+    var $province_selector = $('#id_address_province', $panel); // 省
+    var $city_selector = $('#id_address_city', $panel);         // 市
+    var $district_selector = $('#id_address_district', $panel); // 区/县
+    init_district_selector($province_selector, $city_selector, $district_selector, '', '', '');
+
+    var $form = $('#id_address_form', $panel).on("change", function(){
+        $('.alert', $(this)).hide();
+    });
+
+    $('#id_address_new', $panel).on('change', function(){
+      var validator = $form.validate();
+      validator.resetForm();
+      $('input[name=id]', $form).val("");
+      $('#id_is_default').prop("checked", true);
+    });
+
+    $('.edit_address', $panel).on("click", function(){
+      var $address = $("#id_address_"+$(this).data('id'), $panel);
+      $address.prop("checked", true);
+      var values = $address.data('values');
+      // fill the address values into corresponding form fields.
+      for (var key in values){
+        // #id_is_default is a checkbox, we should touch prop "checked" instead of "value"
+        if (key == "is_default"){
+          $('#id_is_default').prop("checked", values["is_default"]);
+        } else {
+          $('#id_'+key).val(values[key]);
+        }
+      }
+
+      // have to call init_district_selector() to fill the district sections due to cascade selecting.
+      init_district_selector($province_selector, $city_selector, $district_selector,
+          values['address_province'], values['address_city'], values['address_district']);
+      // set the address_id to hidden field
+      $('input[name=id]', $form).val($(this).data('id'));
+    });
+
+    $('.delete_address', $panel).on("click", function () {
+      $.post($(this).data('url'), {"csrfmiddlewaretoken": "{{ csrf_token }}"}).done(function (data) {
+         refresh_panel();
+      });
+    });
+
+    // let the selected address as checked by default
+    $("#id_address_"+{{ selected_address_id }}).prop("checked", true);
+
+    var validator = $form.validate();
+
+    $form.ajaxForm({
+      dataType: 'json',
+      // success identifies the function to invoke when the server response
+      // has been received
+      success: function (response) {
+        if (response['ret'] == 0) {
+          refresh_panel()
+        } else {
+          validator.showErrors(response['errmsg-detail']);
+        }
+        $(":submit", $form).attr("disabled", false);
+      },
+
+      error: function (xhr, textStatus, errorThrown) {
+        showFormSubmitError($form, textStatus);
+        $(":submit", $form).attr("disabled", false);
+      }
+    });
+
+    function refresh_panel(){
+      // pass the selected address to server and restore it after load the page again.
+      var selected_address_id = $('input[name=id]', $form).val();
+      // should load the panel again in panel parent, otherwise new panel will embedded in old panel again.
+      $panel.parent().load('{% url "website:order:shipaddress_list" %}' + "?selected=" + selected_address_id)
+    }
+
+    function showFormSubmitError($form, errmsg) {
+      //TODO: the response format like below. we should extract the errmsg-detail to show.
+      // {"ret": 1004, "errmsg": "验证表单失败，请确认表单的必填项都填写完整和数据格式正确", "errmsg-detail": {"mobile": ["这个字段是必填项。"], "address": ["这个字段是必填项。"]}}
+      var $alert = $('.alert', $form);
+      $alert.addClass('alert-warning').removeClass('alert-success');
+      $alert.html('<h4>错误信息</h4> ' + errmsg);
+      $alert.show();
+    }
+  });
+</script>

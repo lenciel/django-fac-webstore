@@ -1,0 +1,18 @@
+{% extends 'common/admin/generic.list.inc.html' %}
+
+{% block pagecontent_js %}
+  {{ block.super }}
+  <script>
+    $(document).ready(function () {
+      var $main_table = $('#id-{{ model_name }}-table');
+
+      $main_table.on('click', 'a[data-action=preview]', function (e) {
+        e.stopPropagation();
+        window.open($(this).data('url'), '_blank');
+      });
+    });
+
+  </script>
+
+{% endblock pagecontent_js %}
+

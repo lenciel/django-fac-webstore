@@ -1,0 +1,7 @@
+<thead>
+<tr>
+  {% for field in builder %}
+    <th class="datatables-col-{{ field.name }} {% if field.field.is_checkbox %}datatables-header-checkbox{% endif %}"></th>
+  {% endfor %}
+</tr>
+</thead>

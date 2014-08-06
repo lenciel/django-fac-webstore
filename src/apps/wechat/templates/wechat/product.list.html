@@ -1,0 +1,9 @@
+{% extends 'wechat/wechat.base.inc.html' %}
+{% block main_content %}
+    {% for product in products %}
+        <div class="row">
+            <h1><a href="{% url 'wechat:product_detail' product.id %}">{{ product.name }}</a></h1>
+            <div class="col-xs-12 col-sm-12">{{ product.detail_text }}</div>
+        </div>
+    {% endfor %}
+{% endblock %}

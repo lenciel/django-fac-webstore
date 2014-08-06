@@ -1,0 +1,26 @@
+{% extends 'website/website.base.inc.html' %}
+
+{% block title %}用户中心{% endblock title %}
+{% block main_content %}
+  <div class="customer-sidebar-frame border-gray" style="height: 600px;">
+    <ul>
+      <li class="profile"><a href="{% url 'website:customer:customer_profile' %}">账户信息</a></li>
+      <li class="order"><a href="{% url 'website:customer:customer_center' %}">我的订单</a></li>
+      <li class="refund"><a href="#">退换货</a></li>
+      <li class="feedback"><a href="{% url 'website:customer:customer_feedback' %}">意见反馈</a></li>
+    </ul>
+  </div>
+  <div class="customer-main-frame border-gray">
+    {% block customer_main_content %}
+    {% endblock %}
+  </div>
+  <script>
+    $(document).ready(function() {
+      $('.customer-sidebar-frame > ul > li').each(function() {
+        if ($(this).attr('class') == '{{ sidebar_tag }}') {
+          $(this).children().first().addClass('active');
+        }
+      });
+    });
+  </script>
+{% endblock main_content %}

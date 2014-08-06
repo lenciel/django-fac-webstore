@@ -1,0 +1,198 @@
+{% load staticfiles %}
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Use the correct meta names below for your web application
+       Ref: http://davidbcalhoun.com/2010/viewport-metatag
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">-->
+
+{#    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">#}
+    <meta name="viewport" content="width=1024">
+    <!-- Basic Styles -->
+    <link rel="stylesheet" href="{% static 'website/styles/bootstrap.css' %}" media="screen"/>
+    <link rel="stylesheet" href="{% static 'website/styles/font-awesome.css' %}" media="screen"/>
+    <link rel="stylesheet" href="{% static 'website/styles/zoomadmin-production.css' %}" media="screen"/>
+    <link rel="stylesheet" href="{% static 'website/styles/zoomadmin-skins.css' %}" media="screen"/>
+    <link rel="stylesheet" href="{% static 'website/styles/project.css' %}" media="screen"/>
+
+    <!-- FAVICONS -->
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+
+    <!-- GOOGLE FONT -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+    <!-- PAGE RELATED CSS -->
+    {% block extracss %}{% endblock %}
+
+    <!-- Link to Microsoft CDN's jQuery + jQueryUI; fall back to local -->
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.2.min.js"></script>
+    <script>
+      if (!window.jQuery) {
+        document.write('<script src="{% static 'website/scripts/libs/jquery-2.0.2.min.js' %}"><\/script>');
+      }
+    </script>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <script>
+      if (!window.jQuery.ui) {
+        document.write('<script src="{% static 'website/scripts/libs/jquery-ui-1.10.3.min.js' %}"><\/script>');
+      }
+    </script>
+
+    <!-- JS TOUCH : include this plugin for mobile drag / drop touch events
+    <script src="{% static 'website/scripts/plugin/jquery-touch/jquery.ui.touch-punch.min.js' %}"></script> -->
+
+    <!-- BOOTSTRAP JS -->
+    <script src="{% static 'website/scripts/libs/bootstrap.min.js' %}"></script>
+
+    <!-- CUSTOM NOTIFICATION -->
+    <script src="{% static 'website/scripts/notification/SmartNotification.min.js' %}"></script>
+
+    <!-- JQUERY VALIDATE -->
+    <script src="{% static 'website/scripts/plugin/jquery-validate/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'website/scripts/plugin/jquery-validate/jquery.validate.zh-CN.js' %}"></script>
+
+    <!-- JQUERY SELECT2 INPUT -->
+    <script src="{% static 'website/scripts/plugin/select2/select2.min.js' %}"></script>
+
+    <!-- browser msie issue fix -->
+    <script src="{% static 'website/scripts/plugin/msie-fix/jquery.mb.browser.min.js' %}"></script>
+
+  </head>
+  <body class="fixed-width desktop-detected ultra-light-style hidden-menu">
+    <!-- possible classes: minified, fixed-ribbon, fixed-header, fixed-width-->
+
+    <!-- HEADER -->
+    <header id="header">
+      <div id="logo-group">
+
+        <!-- PLACE YOUR LOGO HERE -->
+        <span id="logo"> <a href="/"><img src="{% static 'website/img/4d25187e.logo.png' %}" alt="中国电信应用工厂应用工厂"></a> </span>
+        <!-- END LOGO PLACEHOLDER -->
+      </div>
+      <!-- pulled right: nav area -->
+      <div class="pull-right">
+        {% block header-nav %}
+        {% if user.is_authenticated %}
+        <!-- shortcut dropdown -->
+        <div class="btn-group" style="padding-top: 40px;margin-right:15px">
+          <a class="btn btn-default btn-bold" data-url="{% url 'website:customer:customer_home' %}" data-hover="dropdown">
+            <span class="txt-color-blue">{{ user.email }}&nbsp;</span><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <span class="dropdown-header">账号管理</span>
+              <a href="javascript:void(0);">账户信息</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <span class="dropdown-header">订单管理</span>
+              <a href="javascript:void(0);">我的订单</a>
+{#        TODO: 暂时没有购物车#}
+{#              <a href="javascript:void(0);">我的购物车</a>#}
+            </li>
+            <li class="divider"></li>
+            <li>
+              <span class="dropdown-header">客户服务</span>
+              <a href="javascript:void(0);">退换货</a>
+              <a href="javascript:void(0);">意见反馈</a>
+            </li>
+            <li class="divider"></li>
+            <!-- logout button -->
+            <li>
+              <a href="login.html" title="Sign Out">退出</a>
+            </li>
+            <!-- end logout button -->
+          </ul>
+
+{#        TODO: 暂时没有购物车#}
+{#          <a class="btn btn-default btn-bold" href="javascript:void(0);">#}
+{#            购物车(<span class="txt-color-red">3</span>)#}
+{#          </a>#}
+        </div>
+        <!-- end shortcut -->
+        {% endif %}
+        {% endblock header-nav%}
+      </div>
+      <!-- end pulled right: nav area -->
+
+    </header>
+    <!-- END HEADER -->
+
+    <!-- MAIN PANEL -->
+    <div id="main" role="main">
+      <div class="row">
+        <!-- SIDEBAR -->
+        {% block sidebar %}
+        {% endblock sidebar%}
+        <!-- END SIDEBAR -->
+
+        <!-- MAIN CONTENT -->
+        {% block main_content %}
+        {% endblock %}
+        <!-- END MAIN CONTENT -->
+      </div>
+
+      <!-- FOOTER PANEL -->
+      <div id="footer">
+        <div id="contact-group" class="pull-left">
+            <span style="line-height: 13px; font-size:13px">
+              <i class="icon_phone_gray"></i>&nbsp;&nbsp;400-879-3988
+            </span>
+            <div class="icon_mail_footer" style="display: inline-block;"></div><span style="line-height: 11px; font-size: 11px">&nbsp;&nbsp;service@app2b.cn</span>
+            <span class="icon_wechat hover-zoom-qrcode" style="padding-left: 30px; margin-bottom: 5px">
+              <img src="{% static 'website/img/qrcode.png' %}" >
+            </span>
+        </div>
+
+        <!-- pulled right: meta data -->
+        <div class="pull-right">
+          <span><a href="http://www.189works.com" target="view_window">关于我们</a></span>
+          <span><a href="{% url 'website:legal' %}" target="view_window">法律声明</a></span>
+          <span><a href="{% url 'website:privacy' %}" target="view_window">隐私政策</a></span>
+          <p>&#169;中国电信股份有限公司应用商店运营中心ICP证号:蜀ICP备12023937号-3 <br>
+            [增值电信业务经营许可证A2.B1.B2-20090001][文网文[2008]第053号]
+          </p>
+        </div>
+        <!-- end pulled right: nav area -->
+      </div>
+      <!-- END FOOTER PANEL -->
+
+    </div>
+    <!-- END MAIN PANEL -->
+
+    <div><a id="to-top"></a></div>
+    <!--================================================== -->
+
+    <!--[if IE 7]>
+
+    <h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
+
+    <![endif]-->
+
+    <!-- PROJECT SPECIFIC -->
+    <script src="{% static 'website/scripts/project.js' %}"></script>
+
+    <!-- MAIN APP JS FILE -->
+    <script src="{% static 'website/scripts/app.js' %}"></script>
+
+    <!-- PAGE RELATED PLUGIN(S) -->
+    {% block extrajs %}{% endblock %}
+
+    <!-- GOOGLE ANALYTICS CODE Below -->
+    {% include "website/ga.html" %}
+  </body>
+
+</html>

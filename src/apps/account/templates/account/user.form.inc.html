@@ -1,0 +1,24 @@
+{% extends 'common/admin/generic.form.inc.html' %}
+
+{% block pagecontent_js %}
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var $form = $('#{{ form_id }}');
+    var rules = $form.buildFormValidationRules(true);
+    $.extend(rules,{
+      password: {
+        required: true,
+        rangelength: [ 6, 64 ]
+      },
+      confirm_password: {
+        equalTo: "input[name='password']"
+      }
+    });
+    //NOTE: can't call $form.validate({rules: rules}) twice because generic.form has done it.
+    // make tricky way to overwrite the rules directly.
+    $form.data("validator").settings.rules = rules;
+  });
+</script>
+
+{% endblock pagecontent_js %}

@@ -1,0 +1,23 @@
+{% extends 'website/website.base.inc.html' %}
+
+{% load staticfiles %}
+
+{% block main_content %}
+<form method="post" id="id_payment_form" action="{% url 'website:order:payment_confirm' %}">
+  <div class="form-horizontal" id="id_payment_panel">
+    <label>
+      订单信息
+    </label>
+    {% include 'order/website/order.list.inc.html' %}
+
+    {# TODO 支付宝/其它支付方式选取 #}
+    <input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
+    <Button type="commit" id="id_confirm_button" class="btn btn-primary">确认支付</Button>
+  </div>
+</form>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+  });
+</script>
+{% endblock %}

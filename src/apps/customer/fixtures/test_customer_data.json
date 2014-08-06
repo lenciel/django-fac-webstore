@@ -1,0 +1,68 @@
+[
+  {
+    "pk": 100000001,
+    "model": "account.user",
+    "password": "123456",
+    "fields": {
+      "email": "customer@webstore.com",
+      "name": "customer",
+      "phone": "",
+      "gender": "M",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-12-27T10:15:29.729",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$JcIDIVlij6lL$96WrdBIgwjQYbXs7hOPEwUGwhrR+6g2Ur5oaBMHlX4I=",
+      "date_joined": "2013-12-27T10:09:15.020"
+    }
+  },
+  {
+    "pk": 100000001,
+    "model": "customer.customer",
+    "fields": {
+      "company_website": "",
+      "company_tel": "",
+      "company_name": "",
+      "groups": [],
+      "company_address": "",
+      "user_permissions": [],
+      "company_industry": "",
+      "is_company": false
+    }
+  },
+  {
+    "pk": 1,
+    "model": "customer.shipaddress",
+    "fields": {
+      "receiver": "receiver1",
+      "address": "address1",
+      "address_province": "四川省",
+      "address_city": "成都市",
+      "address_district": "金牛区",
+      "mobile": "12345678",
+      "email": "test1@webstore.com",
+      "owner": 100000001,
+      "is_default": false,
+      "created": "2013-12-30T19:19:30.931"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "customer.shipaddress",
+    "fields": {
+      "receiver": "receiver2",
+      "address": "address1",
+      "address_province": "四川省",
+      "address_city": "成都市",
+      "address_district": "锦江区",
+      "mobile": "87654321",
+      "email": "test2@webstore.com",
+      "owner": 100000001,
+      "is_default": true,
+      "created": "2013-12-30T19:19:30.931"
+    }
+  }
+]
+

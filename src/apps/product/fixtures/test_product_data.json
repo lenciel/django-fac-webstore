@@ -1,0 +1,580 @@
+[
+  {
+    "pk": 1,
+    "model": "foundation.image",
+    "fields": {
+      "width": 359,
+      "image_file": "images/test1.png",
+      "height": 360,
+      "created": "2013-12-31T13:49:40.035"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "foundation.image",
+    "fields": {
+      "width": 200,
+      "image_file": "images/test2.png",
+      "height": 200,
+      "created": "2013-12-31T13:49:52.942"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "foundation.image",
+    "fields": {
+      "width": 359,
+      "image_file": "images/test3.png",
+      "height": 360,
+      "created": "2013-12-31T13:49:40.035"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "foundation.image",
+    "fields": {
+      "width": 200,
+      "image_file": "images/test4.png",
+      "height": 200,
+      "created": "2013-12-31T13:49:52.942"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "foundation.image",
+    "fields": {
+      "width": 359,
+      "image_file": "images/test5.png",
+      "height": 360,
+      "created": "2013-12-31T13:49:40.035"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "foundation.image",
+    "fields": {
+      "width": 200,
+      "image_file": "images/test6.png",
+      "height": 200,
+      "created": "2013-12-31T13:49:52.942"
+    }
+  },
+
+  {
+    "pk": 1,
+    "model": "product.provider",
+    "fields": {
+      "updated": "2013-12-30T19:07:18.138",
+      "name": "provider1",
+      "creator": 1,
+      "created": "2013-12-30T19:07:18.138",
+      "is_active": true,
+      "owner": 1,
+      "description": "dd"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "product.productimage",
+    "fields": {
+      "image": 1,
+      "display_order": 0,
+      "object_id": 1,
+      "content_type": ["product", "product"]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "product.productimage",
+    "fields": {
+      "image": 2,
+      "display_order": 1,
+      "object_id": 1,
+      "content_type": ["product", "product"]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "product.productdetailimage",
+    "fields": {
+      "image": 2,
+      "display_order": 0,
+      "object_id": 1,
+      "content_type": ["product", "product"]
+    }
+  },
+  {
+    "pk": 2,
+    "model": "product.productdetailimage",
+    "fields": {
+      "image": 3,
+      "display_order": 0,
+      "object_id": 2,
+      "content_type": ["product", "product"]
+    }
+  },
+  {
+    "pk": 3,
+    "model": "product.productdetailimage",
+    "fields": {
+      "image": 4,
+      "display_order": 0,
+      "object_id": 5,
+      "content_type": ["product", "product"]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "product.productcategory",
+    "fields": {
+      "name": "test2"
+    }
+  }
+  ,
+  {
+    "pk": 2,
+    "model": "product.productcategory",
+    "fields": {
+      "name": "档次"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "product.product",
+    "fields": {
+      "category": 1,
+      "sale_volume": 0,
+      "updated": "2013-12-30T19:08:08.841",
+      "name": "product1",
+      "title_image_width": 359,
+      "creator": 1,
+      "title_image_file": "images/test1.png",
+      "title_image_height": 360,
+      "created": "2013-12-30T19:08:08.841",
+      "is_active": true,
+      "rating": "1",
+      "summary": "11",
+      "provider": 1,
+      "owner": 1,
+      "detail_text": "product1这是一个测试.\r\n这是一个 测试.\r\n这是一个测试.这是一个测试.这是一个测试.这是一个测试.",
+      "price": 100.0,
+      "price_text": "4000/小时",
+      "is_published": true,
+      "article": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "product.product",
+    "fields": {
+      "category": 2,
+      "sale_volume": 0,
+      "updated": "2013-12-30T19:19:30.931",
+      "name": "product2(档次测试)",
+      "title_image_width": 359,
+      "creator": 1,
+      "title_image_file": "images/test2.png",
+      "title_image_height": 360,
+      "created": "2013-12-30T19:19:30.931",
+      "is_active": true,
+      "rating": "1",
+      "summary": "111",
+      "provider": 1,
+      "owner": 1,
+      "detail_text": "product2这是一个测试.这是一个测试.这是一个测试.\r\n这是一个测试.这是一个测试.这是一个测试.",
+      "price": 200.20,
+      "price_text": "3000/周",
+      "is_published": true,
+      "article": 2
+    }
+  },
+  {
+    "pk": 3,
+    "model": "product.product",
+    "fields": {
+      "category": 1,
+      "sale_volume": 0,
+      "updated": "2013-12-30T19:23:34.500",
+      "name": "product3",
+      "title_image_width": 359,
+      "creator": 1,
+      "title_image_file": "images/test3.png",
+      "title_image_height": 360,
+      "created": "2013-12-30T19:23:34.500",
+      "is_active": true,
+      "rating": "1",
+      "summary": "ss",
+      "provider": 1,
+      "owner": 1,
+      "detail_text": "sdf",
+      "price": 300.20,
+      "is_published": false,
+      "price_text": "300/年",
+      "article": 3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "product.product",
+    "fields": {
+      "category": 1,
+      "sale_volume": 0,
+      "updated": "2013-12-30T19:28:05.453",
+      "name": "product4",
+      "title_image_width": 359,
+      "creator": 1,
+      "title_image_file": "images/test4.png",
+      "title_image_height": 360,
+      "created": "2013-12-30T19:28:05.453",
+      "is_active": true,
+      "rating": "1",
+      "summary": "ss",
+      "provider": 1,
+      "owner": 1,
+      "detail_text": "df",
+      "price": 400.40,
+      "is_published": false,
+      "article": 4,
+      "price_text": "400/天"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "product.product",
+    "fields": {
+      "category": 1,
+      "sale_volume": 0,
+      "updated": "2013-12-30T19:30:14.461",
+      "name": "product5",
+      "title_image_width": 359,
+      "creator": 1,
+      "title_image_file": "images/test5.png",
+      "title_image_height": 360,
+      "created": "2013-12-30T19:30:14.461",
+      "is_active": true,
+      "rating": "1",
+      "summary": "dd",
+      "provider": 1,
+      "owner": 1,
+      "detail_text": "df",
+      "price": 500.50,
+      "price_text": "5000/月",
+      "is_published": false,
+      "article": 5
+    }
+  },
+  {
+    "pk": 1,
+    "model": "product.samplecase",
+    "fields": {
+      "title": "product1案例标题",
+      "product": 1,
+      "title_image_file": "images/test1.png",
+      "title_image_width": 20,
+      "title_image_height": 40,
+      "display_order": 10,
+      "detail_text": "product1案例详情文本"
+    }
+  },
+
+  {
+    "pk": 1,
+    "model": "product.samplecase",
+    "fields": {
+      "title": "product2案例标题",
+      "product": 2,
+      "title_image_file": "images/test2.png",
+      "title_image_width": 20,
+      "title_image_height": 40,
+      "display_order": 10,
+      "detail_text": "product2案例详情文本"
+    }
+  },
+
+  {
+    "pk": 10,
+    "model": "product.productcategoryattribute",
+    "fields": {
+      "category": 1,
+      "display_order": 1,
+      "is_active": true,
+      "name": "size",
+      "description": "dd"
+    }
+  },
+  {
+    "pk": 20,
+    "model": "product.productcategoryattribute",
+    "fields": {
+      "category": 1,
+      "display_order": 2,
+      "is_active": true,
+      "name": "color",
+      "description": "d"
+    }
+  },
+  {
+    "pk": 50,
+    "model": "product.productcategoryattribute",
+    "fields": {
+      "category": 2,
+      "display_order": 2,
+      "is_active": true,
+      "name": "档次",
+      "description": "档次"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 10,
+      "value": "small",
+      "display_order": 3
+    }
+  },
+  {
+    "pk": 11,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 10,
+      "value": "medium",
+      "display_order": 2
+    }
+  },
+  {
+    "pk": 12,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 10,
+      "value": "big",
+      "display_order": 1
+    }
+  },
+  {
+    "pk": 20,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 20,
+      "value": "red",
+      "display_order": 1
+    }
+  },
+  {
+    "pk": 21,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 20,
+      "value": "white",
+      "display_order": 3
+    }
+  },
+  {
+    "pk": 20000,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 1,
+      "attribute": 20,
+      "value": "no-use",
+      "display_order": 4
+    }
+  },
+
+  {
+    "pk": 50,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 2,
+      "attribute": 50,
+      "value": "乞丐版",
+      "display_order": 1
+    }
+  },
+  {
+    "pk": 51,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 2,
+      "attribute": 50,
+      "value": "基础版",
+      "display_order": 2
+    }
+  },
+  {
+    "pk": 52,
+    "model": "product.productattributeoption",
+    "fields": {
+      "product": 2,
+      "attribute": 50,
+      "value": "豪华版",
+      "display_order": 3
+    }
+  },
+
+
+  {
+    "pk": 1,
+    "model": "product.productsku",
+    "comment": "=======================sku=======",
+    "fields": {
+      "product": 1,
+      "attribute_options": ",10,20,",
+      "sku": "1",
+      "price": 2.2
+    }
+  },
+  {
+    "pk": 2,
+    "model": "product.productsku",
+    "fields": {
+      "product": 1,
+      "attribute_options": ",12,20,",
+      "sku": "1",
+      "price": 2.4
+    }
+  },
+  {
+    "pk": 3,
+    "model": "product.productsku",
+    "fields": {
+      "product": 1,
+      "attribute_options": ",11,21,",
+      "sku": "1",
+      "price": 3.3
+    }
+  },
+  {
+    "pk": 4,
+    "model": "product.productsku",
+    "fields": {
+      "product": 1,
+      "attribute_options": ",12,21,",
+      "sku": "1",
+      "price": 3.4
+    }
+  },
+  {
+    "pk": 50,
+    "model": "product.productsku",
+    "fields": {
+      "product": 2,
+      "attribute_options": ",50,",
+      "sku": "1",
+      "price": 1200,
+      "stock_quantity": 2
+    }
+  },
+  {
+    "pk": 51,
+    "model": "product.productsku",
+    "fields": {
+      "product": 2,
+      "attribute_options": ",51,",
+      "sku": "1",
+      "price": 2400,
+      "stock_quantity": 1
+    }
+  },
+  {
+    "pk": 52,
+    "model": "product.productsku",
+    "fields": {
+      "product": 2,
+      "attribute_options": ",52,",
+      "sku": "1",
+      "price": 3600,
+      "stock_quantity": 0
+    }
+  },
+
+  {
+    "pk": 1,
+    "model": "cms.article",
+    "fields": {
+      "updated": "2014-02-26T11:31:20.717",
+      "title": "资讯1",
+      "title_image_file": "images/test1.png",
+      "creator": 1,
+      "is_active": true,
+      "created": "2014-02-26T11:31:20.717",
+      "content_file": "contents/test1.html",
+      "owner": 1,
+      "summary": "资讯1摘要",
+      "is_published": true
+    }
+  },
+  {
+    "pk": 2,
+    "model": "cms.article",
+    "fields": {
+      "updated": "2014-02-26T11:31:20.717",
+      "title": "资讯2",
+      "title_image_file": "images/test2.png",
+      "creator": 1,
+      "is_active": true,
+      "created": "2014-02-26T11:31:20.717",
+      "content_file": "contents/test1.html",
+      "owner": 1,
+      "summary": "资讯2摘要",
+      "is_published": true
+    }
+  },
+  {
+    "pk": 3,
+    "model": "cms.article",
+    "fields": {
+      "updated": "2014-02-26T11:31:20.717",
+      "title": "资讯3",
+      "title_image_file": "images/test3.png",
+      "creator": 1,
+      "is_active": true,
+      "created": "2014-02-26T11:31:20.717",
+      "content_file": "contents/test1.html",
+      "owner": 1,
+      "summary": "资讯3摘要",
+      "is_published": true
+    }
+  },
+  {
+    "pk": 4,
+    "model": "cms.article",
+    "fields": {
+      "updated": "2014-02-26T11:31:20.717",
+      "title": "资讯4",
+      "title_image_file": "images/test4.png",
+      "creator": 1,
+      "is_active": true,
+      "created": "2014-02-26T11:31:20.717",
+      "content_file": "contents/test1.html",
+      "owner": 1,
+      "summary": "资讯4摘要",
+      "is_published": true
+    }
+  },
+  {
+    "pk": 5,
+    "model": "cms.article",
+    "fields": {
+      "updated": "2014-02-26T11:31:20.717",
+      "title": "资讯5",
+      "title_image_file": "images/test4.png",
+      "creator": 1,
+      "is_active": true,
+      "created": "2014-02-26T11:31:20.717",
+      "content_file": "contents/test1.html",
+      "owner": 1,
+      "summary": "资讯5摘要",
+      "is_published": true
+    }
+  }
+
+
+
+
+]
+

@@ -1,0 +1,16 @@
+<Table class="table table-hover table-bordered">
+  {% for order in object_list %}
+      <tr>
+          <td>订单id {{ order.id }}</td>
+          <td>商品总价 {{ order.amount }}</td>
+      </tr>
+  {% endfor %}
+  <tr>
+      <td colspan="2">总计: {{ total }}</td>
+  </tr>
+</Table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+</script>

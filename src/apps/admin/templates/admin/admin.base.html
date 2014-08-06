@@ -1,0 +1,198 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="zh_CN">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}管理主页{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}{% endblock %}">
+    <meta name="author" content="{% block author %}ZOOM{% endblock %}">
+
+    <!-- Le styles -->
+    <link href="{% static 'website/styles/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="{% static 'admin/css/font-awesome.min.css' %}" />
+
+    <!--ace styles-->
+    <link rel="stylesheet" href="{% static 'libs/chosen_v1.1.0/chosen.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'admin/css/ace.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/css/ace-fonts.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin/css/ace-skins.min.css' %}" />
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="{% static 'admin/css/ace-ie.min.css' %}" />
+    <![endif]-->
+    <style>
+    </style>
+    <link href="{% static 'admin/css/site.css' %}" rel="stylesheet"
+
+  {% block extrahead %}{% endblock extrahead %}
+
+  </head>
+  <body>
+  {% block body %}
+  <div class="navbar">
+      <div class="navbar-inner">
+          <div class="container-fluid">
+              <a href="#" class="brand">
+                  <small>
+                      <i class="icon-leaf"></i>
+                      {% block sitename %} Site Name {% endblock sitename %}
+                  </small>
+              </a><!--/.brand-->
+
+              {% include 'admin/topnav.inc.html' %}
+          </div><!--/.container-fluid-->
+      </div><!--/.navbar-inner-->
+  </div>
+
+  <div class="container-fluid main-container">
+      <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+      </a>
+
+      <div class="sidebar" id="sidebar">
+          {% include 'admin/sidebar.inc.html' %}
+      </div>
+
+      <div id="main-content" class="main-content">
+          {% include 'admin/task.base.inc.html' %}
+      </div><!--/#main-content-->
+  </div><!--/.fluid-container#main-container-->
+
+  <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-small btn-inverse">
+      <i class="icon-double-angle-up icon-only bigger-110"></i>
+  </a>
+  {% endblock body %}
+  <!--basic scripts-->
+  <script src="{% static 'website/scripts/libs/jquery-2.0.2.min.js' %}"></script>
+  <script src="{% static 'website/scripts/libs/bootstrap.min.js' %}"></script>
+
+  <!--page specific plugin scripts-->
+
+  <!--[if lte IE 8]>
+    <script src="{% static 'js/excanvas.min.js' %}"></script>
+  <![endif]-->
+
+  <script src="{% static 'js/jquery-ui-1.10.3.custom.min.js' %}"></script>
+  <script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
+
+  <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+  <script src="{% static 'js/jquery.validate.zh-CN.js' %}"></script>
+  <script src="{% static 'js/jquery.form.js' %}"></script>
+  <script src="{% static 'libs/chosen_v1.1.0/chosen.jquery.min.js' %}"></script>
+  <script src="{% static 'admin/js/ace-elements.min.js' %}"></script>
+  <script src="{% static 'admin/js/ace.min.js' %}"></script>
+  <script src="{% static 'admin/js/bootbox.min.js' %}"></script>
+  <script src="{% static 'js/jquery.InputLimiter.1.3.1.min.js' %}"></script>
+  <script src="{% static 'admin/js/site.ajaxform.js' %}"></script>
+
+  {% include 'admin/datatable.init.inc.html' %}
+  <!--inline scripts related to this page-->
+  <script type="text/javascript">
+    //
+    // 在指定的div里使用ajax载入一个页面，在载入过程显示“正在载入...”的动画
+    //
+    // $target      jQuery对象
+    // targetUrl    要载入的目标地址
+    //
+    // 示例： load($('#main-content'), 'dashboard')
+    //
+    function load($target, targetUrl) {
+      var $progressBar = $('#id-progressbar');
+      if (!$progressBar || !$progressBar.length) {
+          var height = $(window).height();
+          var width = $(window).width();
+
+          $target.append('<div id="id-progressbar" style="position:absolute; left:' + width/2 + 'px; top:' + height/2 + 'px; z-index:1; display:none;" class="well well-large well-transparent lead">\
+                  <i class="icon-spinner icon-spin icon-2x pull-left"></i> 正在载入，请稍候...\
+                </div>');
+
+          var $progressBar = $('#id-progressbar');
+          $progressBar.fadeIn("slow");
+      }
+
+      $target.load(targetUrl, function(responseText, textStatus, req) {
+          // console.log('responseText:' + responseText);
+          // console.log('textStatus:' + textStatus);
+          // console.log('req.status:' + req.status);
+          // console.log('req.readyState:' + req.readyState);
+          if (textStatus == "error") {
+              $target.showServerResponseError(responseText, req, targetUrl);
+          }
+      });
+    }
+
+    // handle
+    // <a href="#" data-url="realm" data-target="main-content">Intro</a>
+    //
+    function bindClickLinkAction() {
+        $(document).on('click', 'a[data-url]', function(e) {
+            var targetUrl = $(this).data('url');
+            var targetDiv = $(this).data('target');
+            if (targetUrl) {
+                if (!targetDiv) {
+                    targetDiv = 'main-content';
+                }
+                // change window.location.hash will trigger $(window).hashchange(function (e)
+                window.location.hash = targetUrl+"#"+targetDiv;
+                // avoid the caller to override the window.location.hash with href
+                e.preventDefault();
+            }
+        });
+    }
+
+    $(document).ready(function() {
+      $.ajaxSetup({cache: false});
+
+      // 注册jquery.validation插件的regex验证方法
+      $.validator.addMethod(
+        "regex",
+        function (value, element, regexp) {
+            var re = new RegExp(regexp);
+            return this.optional(element) || re.test(value);
+        },
+        "请输入正确的值!"
+      );
+      $.validator.setDefaults({
+        errorClass: "error",
+        errorElement: "label",
+        errorPlacement: function(error, element) {
+          element.parent().append(error);
+        }
+      });
+
+      var $sidebar = $('#sidebar');
+      var $mainContent = $('#main-content');
+
+      $('a[data-url]', $sidebar).click(function() {
+          $('li', $sidebar).removeClass('active');
+          $(this).parent().parent().parent().addClass('active');
+          $(this).parent().addClass('active');
+      });
+
+      bindClickLinkAction();
+
+      // Load default content of main-content.
+      $('a', $('li[class=active]', $sidebar)).click();
+
+      $(window).on('hashchange', function() {
+          if (location.hash.length > 1) {
+            var elements = window.location.hash.split("#");
+            var targetUrl =  elements[1];
+            var $target = $("#"+elements[2]);
+            if (!$target.isEmptyObject){
+              load($target, targetUrl);
+            }
+          }
+      });
+    });
+
+  </script>
+  {% block extrajs %}{% endblock extrajs %}

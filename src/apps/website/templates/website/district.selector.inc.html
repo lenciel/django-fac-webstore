@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<div id="id-district">
+  <p><select name="province"></select></p>
+  <p><select name="city"></select></p>
+  <p><select name="district"></select></p>
+</div>
+
+<script src="{% static 'scripts/district.js' %}"></script>
+<script>
+$(document).ready(function() {
+    var $province_selector = $('#id-district select[name=province]'); // 省
+    var $city_selector = $('#id-district select[name=city]');         // 市
+    var $district_selector = $('#id-district select[name=district]'); // 区/县
+
+    init_district_selector($province_selector, $city_selector, $district_selector,
+            '四川省', '成都市', '武侯区');
+});
+</script>

@@ -1,0 +1,61 @@
+{% extends 'website/website.base.inc.html' %}
+
+{% block title %} 注册账号 {% endblock title %}
+{% block main_content %}
+  <h1>现在就加入<strong>应用工厂</strong></h1>
+  <form action="{% url 'website:sign_up' %}" method="post" id="id_signup_form" class="center-block">
+    {% csrf_token %}
+
+  {% for field in form %}
+    <div class="form-group">
+       <label for="id_{{ field.name }}">{{ field.label }}</label>
+       <div class="row">
+         <div class="col-md-4">
+          {{ field }}
+         </div>
+         <div class="col-md-8">
+           {% if field.help_text %}
+           <label class="control-label" for="id_{{ field.name }}">{{field.help_text}}</label>
+           {% endif %}
+         </div>
+       </div>
+    </div>
+  {% endfor %}
+    <div class="form-group">
+        <div class="controls">
+            <input type="checkbox" id="id_agreement">
+        </div>
+        <label for="id_agreement" class="control-label">
+            同意商品在线协议及应用工厂服务协议.
+        </label>
+    </div>
+    <input type="submit" id="id_register_submit_button" value="注册" disabled="disabled" class="btn btn-success btn-lg col-md-offset-2 col-md-4" />
+  </form>
+{% endblock main_content %}
+
+{% block extrajs %}
+  <script>
+    $(document).ready(function() {
+      $(".captcha").after('&nbsp;<a id="id_captcha_refresh" href="#">看不清，换一张。</a>');
+
+        $("#id_agreement").on('change', function(){
+            var checked = $(this).prop('checked');
+            $('#id_register_submit_button').attr('disabled', !checked);
+        });
+
+      var $form = $('#id_signup_form');
+      $("#id_captcha_refresh").click(function() {
+        var $captcha_img = $('.captcha');
+        var $captcha_input = $('#id_captcha_0');
+        $.getJSON('{% url 'captcha-refresh' %}', {}, function(json) {
+          $captcha_img.attr('src', json.image_url);
+          $captcha_input.attr('value', json.key);
+        });
+        return false;
+      });
+
+      $form.validate();
+      {% include 'website/form.errors.inc.html' with form_id='id_signup_form' %}
+    });
+  </script>
+{% endblock extrajs %}

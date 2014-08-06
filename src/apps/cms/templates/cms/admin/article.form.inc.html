@@ -1,0 +1,23 @@
+{#a simple template works with ModelAwareMixin#}
+{% extends 'common/admin/generic.form.inc.html' %}
+{% load staticfiles %}
+
+{% block pagecontent_js %}
+<script type="text/javascript">
+  window.UEDITOR_HOME_URL = "{% static 'libs/ueditor1_3_6/' %}";
+</script>
+<script type="text/javascript" charset="utf-8" src="{% static 'libs/ueditor1_3_6/ueditor.config.js' %}"></script>
+<script type="text/javascript" charset="utf-8" src="{% static 'libs/ueditor1_3_6/ueditor.all.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'libs/ueditor1_3_6/themes/default/css/ueditor.css' %}"/>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var $form = $('#{{ form_id }}');
+
+    $('#id_title_image_file', $form).enableAceImageInput(1024, 1024, 0, 0);
+
+    var ue1 = new UE.ui.Editor({initialFrameWidth: 1000});
+    ue1.render('id_content_html');
+  });
+</script>
+{% endblock pagecontent_js %}

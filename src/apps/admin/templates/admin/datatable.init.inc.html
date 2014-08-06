@@ -1,0 +1,180 @@
+{% comment %}
+为list类型的页面的datatable提供通用初始化模板
+
+在其它模板中的引用方法：
+{% include 'admin/datatable.init.inc.html' %}
+
+{% endcomment %}
+
+{#just a template for clone to datatable action bar of each of list page#}
+<div id="datatable-actions" class="hidden">
+    <div class="btn-group">
+      <a id="column-picker" class="dropdown-toggle btn btn-default btn-sm"  data-toggle="dropdown" href="#">
+          <i class="icon-list-alt"></i> 列 <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu model_fields pull-right">
+      </ul>
+    </div>
+    <div class="btn-group layout-btns" data-toggle="buttons">
+      <label class="btn btn-default btn-sm layout-normal active">
+        <input type="radio"> <i class="icon-th-large"></i>
+      </label>
+      <label class="btn btn-default btn-sm layout-condensed">
+        <input type="radio"> <i class="icon-th"></i>
+      </label>
+    </div>
+    <div class="btn-group layout-btns" data-toggle="buttons-checkbox">
+      <button type="button" class="btn btn-default btn-sm layout-full"><i class="icon-fullscreen"></i></button>
+    </div>
+</div>
+
+<!-- 在需要的页面再载入需要的js，提高页面整体的加载速度 -->
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/js/jquery.dataTables.bootstrap.js' %}"></script>
+
+<script>
+$(document).ready(function() {
+    var table_args = {
+      "sPaginationType": "bootstrap",
+      "bAutoWidth": false, /* 自动计算宽度 */
+      "bSort": true,
+      "bDestroy": true,
+      "bStateSave": true,
+      "iDisplayLength": 15, /* 默认显示15行 */
+      "aLengthMenu": [
+        [15, 25, 50, 100],
+        [15, 25, 50, 100]
+      ],
+      "bProcessing": true,
+      "aoColumnDefs": [
+        { "bSortable": false, "aTargets": ["unsortable", "unexportable"]}
+      ],
+//        l - Length changing
+//        f - Filtering input
+//        t - The table!
+//        i - Information
+//        p - Pagination
+//        r - pRocessing
+      "sDom": "<'row'<'col-md-2'f><'col-md-1'r><'col-md-9'p>>t<'row'<'col-md-3'l><'col-md-4'i><'col-md-5'p>>",
+
+      "oLanguage": {
+            "sProcessing":   "<div class=\"green bigger text-center\"><i class=\"icon-spinner icon-spin orange bigger-200\"></i>&nbsp处理中...</div>",
+            "sLengthMenu":   "每页显示 _MENU_ 条记录",
+            "sZeroRecords":  "没有匹配的记录",
+            "sInfo":         "显示第 _START_ 至 _END_ 条记录，共 _TOTAL_ 条",
+            "sInfoEmpty":    "没有记录",
+            "sInfoFiltered": "(由 _MAX_ 条记录过滤)",
+            "sInfoPostFix":  "",
+            "sSearch":       "查找:",
+            "sUrl":          "",
+            "oPaginate": {
+                "sFirst":    "首页",
+                "sPrevious": "上页",
+                "sNext":     "下页",
+                "sLast":     "末页"
+            },
+            "oAria": {
+                "sSortDescending": ""
+            },
+            "aoColumnDefs": [
+              { "bSortable": false, "aTargets": [ 'unsortable' ] }
+            ]
+        },
+
+        // local storage
+        "fnStateSave": (function(oSettings, oData) {
+          localStorage.setItem(oSettings.nTable.id, JSON.stringify(oData) );
+        }),
+        "fnStateLoad": (function(oSettings) {
+          return JSON.parse(localStorage.getItem(oSettings.nTable.id));
+        })
+    }
+    $.extend( $.fn.dataTable.defaults, table_args);
+});
+
+
+// 初始化datatable, 并使用server side processing
+function dataTableInitWithServerProcessing(datatable, aoColumnDefs, ajaxsource) {
+  datatable.dataTable({
+    "sDom": "<'row'<'col-md-4'r><'col-md-offset-4 col-md-4'<'datatables-action-bar pull-right'>>>t<'row'<'col-md-3'l><'col-md-4'i><'col-md-5'p>>",  // don't show the buildin filter. see http://www.datatables.net/ref#sDom
+    "aoColumnDefs": aoColumnDefs,
+    "sAjaxSource": ajaxsource,
+    "bProcessing": true,
+    "bServerSide": true
+  });
+
+  var $actions = $('#datatable-actions').clone().toggleClass('hidden', false).appendTo($('.datatables-action-bar'));
+
+  //full screen btn
+  $('.layout-btns .layout-full', $actions).click(function () {
+    if ($(this).hasClass('active')) {
+      // reset
+      $('#sidebar, div.breadcrumbs').toggle('fast');
+      $('#main-content').removeClass('full-content').addClass('main-content');
+      $(window).trigger('resize');
+    } else {
+      // full screen
+      $('#sidebar, div.breadcrumbs').toggle('fast', function () {
+        $('#main-content').removeClass('main-content').addClass('full-content');
+        $(window).trigger('resize');
+      });
+    }
+  });
+
+  //switch condense mode
+  $('.layout-btns .layout-normal').click(function(e){
+    $('.dataTables_wrapper table').removeClass('table-condensed');
+  });
+
+  $('.layout-btns .layout-condensed').click(function(e){
+    $('.dataTables_wrapper table').addClass('table-condensed');
+  });
+
+  // show datatable column picker
+  $('#column-picker', $actions).on("click", function(e){
+    var $menu = $('.dropdown-menu', $(this).parent());
+    $menu.children().remove();
+    var oSettings = datatable.dataTable().fnSettings();
+    for (var i = 0; i < oSettings.aoColumns.length; i++) {
+      var searchValue = $("#id_" + oSettings.aoColumns[i].sName, datatable).first().val();
+      // don't allow change the column if it's searching.
+      // treat the name prefix with "_" as internal column which don't allow touch.
+      var should_hide = (searchValue && searchValue.length > 0) || oSettings.aoColumns[i].sName[0] == '_';
+      if (should_hide) {
+        continue;
+      }
+      var icon_class = oSettings.aoColumns[i].bVisible ? 'icon-check' : 'icon-check-empty';
+      var template = jQuery.validator.format('<li><a href="#" data-col="{0}"><i class="{1}"></i>{2}</a></li>');
+      var il = template(i, icon_class, oSettings.aoColumns[i].sTitle);
+      $menu.append(il);
+    }
+    e.preventDefault();
+  }).parent().on("click", "li>a", function(e){
+    var iCol = $(this).data('col');
+    var bVis = datatable.dataTable().fnSettings().aoColumns[iCol].bVisible;
+    datatable.fnSetColumnVis(iCol, !bVis);
+    e.preventDefault();
+  });
+
+  // load history filter text
+  var oSettings = datatable.fnSettings();
+  $("tfoot th", datatable).each(function () {
+    var colIndex = $(this).data('col');
+    $(this).children().change(function () {
+      datatable.fnFilter($(this).val(), colIndex);
+    });
+    // restore the previous filter value to filter editor
+    var stateValue = oSettings.aoPreSearchCols[colIndex]['sSearch'];
+    if (stateValue != '' && stateValue.length > 0) {
+      var $child = $(this).children().first();
+      if ($child.is("select")){
+        $child.val(stateValue.split(','));
+      } else {
+        $child.val(stateValue);
+      }
+    }
+  });
+}
+
+</script>

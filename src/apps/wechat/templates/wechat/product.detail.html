@@ -1,0 +1,151 @@
+{% extends 'wechat/wechat.base.inc.html' %}
+{% load staticfiles %}
+
+{% block main_content %}
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+     <div class="row">
+        <img id="id_selected_product_image" class="img-responsive">
+     </div>
+     <div class="row">
+        <div class="col-xs-12 col-sm-12">
+           {% for image in product.images.all %}
+              <img src="{{ image.image_url }}" class="product_image" width="64" height="64">
+           {% endfor %}
+        </div>
+     </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <h1>{{ product.name }}</h1>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+        <h4>提供商:{{ product.provider }}</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <span><em>价格:</em> <span class="btn btn-info "><span id="id_price">{{ product.price }}</span>元</span></span>
+      </div>
+    </div>
+    {% for attribute, options in attribute_options.items %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-2">{{ attribute }}</div>
+        <div class="col-xs-12 col-sm-10" id="attribute-options">
+          <div class="btn-group" data-attribute="{{ attribute }}">
+            {% for option in options %}
+              <button class="btn btn-large product-attribute-option " id="option_{{ option.id }}"
+                      data-id="{{ option.id }}" type="button"
+                      data-paired_option_ids='[{{ option.paired_option_ids|join:"," }}]'
+                      data-exclude_option_ids='[{{ option.exclude_option_ids|join:"," }}]'>{{ option.value }}</button>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+      <div class="control-group">
+        <label for="id_quantity" class="control-label">
+          数量
+        </label>
+        <div class="controls">
+          <input type="number" name="quantity" id="id_quantity" class="number input-mini required" min="1" max="999" value="1">
+        </div>
+      </div>
+  </div>
+</div>
+
+<h1>产品详情</h1>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    {% for image in product.detail_images.all %}
+      <div class="row">
+        <div class="col-xs-12 col-sm-12"><img src="{{ image.image_url }}"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<h5>{{ product.detail_text }}</h5>
+
+<h1>客户案例</h1>
+<div class="row">
+  {% for samplecase in product.samplecases.all %}
+  <div class="col-xs-12 col-sm-6"><img src="{{ samplecase.title_image_url }}"></div>
+  {% endfor %}
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var skus = $.parseJSON('{{ skus_json }}');
+
+    $('.product-attribute-option').click(function(){
+      var selected_option = $(this);
+      var is_reset = selected_option.hasClass("active");
+      var parentNode = this.parentNode;
+      $('.product-attribute-option').not(selected_option).each(function(){
+        // You can't make the comparison on the jQuery wrapper, but you can make it on the underlying DOM Node.
+        if (this.parentNode == parentNode){
+          $(this).toggleClass("active", false);
+        } else {
+          // clean up options belong to other attribute
+          $(this).prop("disabled", !is_reset);
+        }
+      });
+
+      var paired_option_ids = $(this).data('paired_option_ids');
+      $.each(paired_option_ids, function() {
+        $('#option_'+this).prop("disabled", false);
+      });
+
+      var exclude_option_ids = $(this).data('exclude_option_ids');
+      $.each(exclude_option_ids, function() {
+        if (this != selected_option.data('id') && !is_reset) {
+          // disable "exclude" option ids
+          $('#option_'+this).prop("disabled", true);
+        }
+      });
+
+      $(this).toggleClass("active");
+      refresh_price();
+    });
+
+    function refresh_price() {
+      var key = "";
+      // compose the key with option id delimited with comma
+      $(".product-attribute-option.active").each(function(){
+        if (key) {
+          key += "," + $(this).data('id');
+        } else {
+          key = $(this).data('id');
+        }
+      });
+      if (skus[key]) {
+        $('#id_price').html(skus[key]['price']);
+      }
+    }
+
+    // find the lowest price sku as the default price
+    var lowest_price_sku_id = "";
+    $.each(skus, function(sku_id, value){
+      if (!value['is_outofstock'] && (lowest_price_sku_id.length ==0 || (value['price'] < skus[lowest_price_sku_id]['price']))) {
+        lowest_price_sku_id = sku_id;
+      }
+    });
+    if (lowest_price_sku_id.length > 0){
+      $.each(lowest_price_sku_id.split(','), function(){
+        $('#option_'+this).toggleClass("active");
+      });
+    }
+
+    refresh_price();
+
+    $(".product_image").on("click", function(){
+      $("#id_selected_product_image").attr("src", $(this).attr("src"))
+    }).first().trigger("click");
+  });
+</script>
+
+
+{% endblock main_content %}

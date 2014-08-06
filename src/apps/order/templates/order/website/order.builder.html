@@ -1,0 +1,86 @@
+{% extends 'website/website.base.inc.html' %}
+{% load staticfiles %}
+
+{% block main_content %}
+<div id="id_shipaddress_container">
+{% include 'order/website/order.shipaddress.inc.html' %}
+</div>
+
+<form method="post" id="id_order_form" action="{% url 'website:order:order_builder.product' %}">
+  <div>
+  {% include 'order/website/order.invoice.inc.html' %}
+  </div>
+
+  <div>
+  {% include 'order/website/order.product.list.inc.html' %}
+  </div>
+
+  <input type="hidden" value="{{ csrf_token }}" name="csrfmiddlewaretoken">
+  <input type="hidden" name="ship_address" id="id_ship_address" value="">
+  <div class="alert alert-block hide"></div>
+  <div class="control-group">
+    <div class="controls">
+        <input type="checkbox" id="id_agreement">
+    </div>
+    <label for="id_agreement" class="control-label">
+      同意商品在线协议及应用工厂服务协议.
+    </label>
+  </div>
+  <button class="btn btn-info" type="submit" id="id_order_submit_button" disabled="disabled">提交订单
+      <i class="icon-ok bigger-110"></i>
+  </button>
+</form>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    var $form = $('#id_order_form').on("change", function () {
+      $('.alert', $(this)).hide();
+    });
+    var validator = $form.validate();
+
+    $("#id_agreement").on('change', function(){
+        var checked = $(this).prop('checked');
+        $("#id_order_submit_button").attr('disabled', !checked);
+    });
+
+    $form.ajaxForm({
+      dataType: 'json',
+      beforeSerialize : function () {
+        var ship_address = $('#id_shipaddress_container :radio:checked').val();
+        // TODO: check the ship_address value
+        $("#id_ship_address").val(ship_address);
+      },
+      // success identifies the function to invoke when the server response
+      // has been received
+      success: function (response) {
+        if (response['ret'] == 0) {
+          window.location.replace(response['redirect_url']);
+        } else {
+          validator.showErrors(response['errmsg-detail']);
+        }
+        $(":submit", $form).attr("disabled", false);
+      },
+
+      error: function (xhr, textStatus, errorThrown) {
+        showFormSubmitError($form, textStatus);
+        $(":submit", $form).attr("disabled", false);
+      }
+    });
+
+    function showFormSubmitError($form, errmsg) {
+      //TODO: the response format like below. we should extract the errmsg-detail to show.
+      // {"ret": 1004, "errmsg": "验证表单失败，请确认表单的必填项都填写完整和数据格式正确", "errmsg-detail": {"mobile": ["这个字段是必填项。"], "address": ["这个字段是必填项。"]}}
+      var $alert = $('.alert', $form);
+      $alert.addClass('alert-warning').removeClass('alert-success');
+      $alert.html('<h4>错误信息</h4> ' + errmsg);
+      $alert.show();
+    }
+  });
+</script>
+
+{% endblock main_content %}
+
+{% block extrajs %}
+<script src="{% static 'js/jquery.form.js' %}"></script>
+<script src="{% static 'website/js/district.js' %}"></script>
+{% endblock extrajs %}
